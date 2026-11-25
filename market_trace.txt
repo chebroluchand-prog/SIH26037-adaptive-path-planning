@@ -1,0 +1,23 @@
+
+--- VERIFICATION SELF-CHECK: [MARKET SCENARIO] ---
+Ego Start Pose: [5.0, 0.0], Initial Speed: 4.00 m/s
+  Actor 1 (Class 4) @ (25.0, 3.5): Ego Arrival t = 5.00 s | Obstacle Crossing t = 7.00 s [DELTA = 2.00 s]
+  Actor 2 (Class 4) @ (45.0, -3.5): Ego Arrival t = 10.00 s | Obstacle Crossing t = 14.00 s [DELTA = 4.00 s]
+  Actor 3 (Class 1) @ (65.0, 3.5): Ego Arrival t = 15.00 s | Obstacle Crossing t = 20.00 s [DELTA = 5.00 s]
+  Actor 4 (Class 5) @ (85.0, -3.5): Ego Arrival t = 20.00 s | Obstacle Crossing t = 28.00 s [DELTA = 8.00 s]
+  Actor 5 (Class 1) @ (105.0, -0.8): Longitudinal Actor (V = [0.5, 0.0] m/s)
+---------------------------------------------------
+
+
+=========================================
+       SIH26037 SIMULATION METRICS       
+=========================================
+Replanning Cycles   : 901
+Mean Latency        : 4.405 ms (Target < 100 ms)
+Peak Latency        : 44.122 ms
+Collisions          : 0
+Minimum Clearance   : 3.807 m
+Average Clearance   : 7.556 m
+Avg Path Curvature  : 0.0332 rad/m
+=========================================
+

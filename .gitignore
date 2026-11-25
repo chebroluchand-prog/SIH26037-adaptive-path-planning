@@ -1,0 +1,7 @@
+.devin/
+diary
+*.asv
+*.slxc
+*.autosave
+.DS_Store
+Thumbs.db

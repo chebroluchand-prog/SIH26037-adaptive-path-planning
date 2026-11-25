@@ -1,0 +1,45 @@
+SIH26037 SIMULINK & STATEFLOW 3D ARCHITECTURE GUIDE
+
+function [trackStates, numTracks] = stepPerception(egoState3D, rawDetections) %#codegen
+% MATLAB Function Block: Perception & Multi-Target Kalman Tracking
+% Inputs: egoState3D [7x1], rawDetections [10x6]
+% Outputs: trackStates [30x6], numTracks double
+persistent tracker;
+if isempty(tracker)
+    tracker = kalmanTracker(0.05, 30);
+end
+tracker.predictAll();
+numTracks = numel(tracker.tracks);
+trackStates = zeros(30, 6);
+for i = 1:numTracks
+    trackStates(i,1:4) = tracker.tracks(i).state';
+    trackStates(i,5)   = tracker.tracks(i).Z;
+    trackStates(i,6)   = tracker.tracks(i).Z_vel;
+end
+end
+
+% Stateflow Chart Architectural Specification (3D Aware):
+% States: CRUISE, CAUTION, PACING, AVOID, EVADE_LATERAL, EMERGENCY_STOP
+% State Transitions:
+%   - CRUISE -> CAUTION        : when minDist < 6.0m || maxRisk > 0.35 || minTTC < 4.0s
+%   - CAUTION -> PACING        : when ~obsApproaching && minDist in [2.0, 5.0]m && minTTC in [2.0, 5.0]s
+%   - CAUTION / PACING -> EVADE_LATERAL : when obsApproaching && latAvailable && (minDist < 4.0m || minTTC < 3.0s)
+%   - CAUTION -> AVOID         : when minDist < 3.0m || maxRisk > 0.65 || minTTC < 2.2s
+%   - ANY -> EMERGENCY_STOP    : ONLY when (minTTC < 1.0s && ~latAvailable) || minDist < 0.8m || maxRisk > 0.98
+%   - EVADE_LATERAL -> CRUISE  : when clearance completed (minDist > 5.0m && maxRisk < 0.2)
+%   - EMERGENCY_STOP -> EVADE_LATERAL : when latAvailable && minTTC > 1.2s
+
+function [vCmd, wCmd, bestPath] = stepDWAPlanner3D(egoState3D, trackStates, numTracks, goal) %#codegen
+% MATLAB Function Block: Vectorized Risk-Aware 3D DWA Local Planner
+% Inputs: egoState3D [7x1], trackStates [30x6], numTracks double, goal [2x1]
+% Outputs: vCmd double, wCmd double, bestPath [40x3]
+[vCmd, wCmd, bestPath] = stepDWAPlanner3D(egoState3D, trackStates, numTracks, goal);
+end
+
+function nextEgoState3D = stepBicycleControl3D(egoState3D, throttleCmd, steerCmd, dt) %#codegen
+% MATLAB Function Block: 3D Vehicle Dynamics & Spatial Integration
+% Inputs: egoState3D [7x1], throttleCmd double, steerCmd double, dt double
+% Outputs: nextEgoState3D [1x7]
+nextEgoState3D = stepBicycleControl3D(egoState3D, throttleCmd, steerCmd, dt);
+end
+
