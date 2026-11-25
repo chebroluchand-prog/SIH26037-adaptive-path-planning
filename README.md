@@ -13,6 +13,8 @@ Indian roads are not highway-style structured lanes. This project plans locally 
 
 ## What it does
 
+
+
 - **Dynamic Window Approach (DWA)** local planner with class-aware elliptical clearance
 - **Six-state behavior**: CRUISE → CAUTION → AVOID → PACING → EVADE_LATERAL → EMERGENCY_STOP
 - **Sensor fusion + Kalman tracking** (camera, LiDAR, radar) with ClassID preserved through tracks
@@ -20,6 +22,8 @@ Indian roads are not highway-style structured lanes. This project plans locally 
 - **Zero collisions** across cattle, village, intersection, highway, and dense-market scenarios (see `VERIFICATION_REPORT.md`)
 
 ### Obstacle classes and lateral margins
+<img width="1798" height="897" alt="BENCHMARK" src="https://github.com/user-attachments/assets/cea413af-eeff-4450-a7f3-9a63d08a3472" />
+Benchmark test results among various scenarios
 
 | ClassID | Object | Lateral margin |
 | --- | --- | --- |
